@@ -25,7 +25,7 @@ const projectsData = [
   {
     title: "Pop Tarts Love",
     description: "A fun dating/matching app that pairs you with someone based on your shared love of Pop Tart flavors.",
-    image: "/projects/pop-tarts-love.PNG",
+    image: "/projects/pop-tarts-love.png",
     link: "https://pop-tarts-love.vercel.app/",
     category: "Experiments",
     tech: ["Next.js", "React", "Tailwind"],
@@ -43,7 +43,7 @@ const projectsData = [
   {
     title: "Tiff's Coffee Bar",
     description: "Website for a local mobile coffee bar — featuring a menu, event booking calendar, gallery, and contact form.",
-    image: "/projects/tiffs-coffee-bar.PNG",
+    image: "/projects/tiffs-coffee-bar.png",
     link: "https://tiffscoffeebar.com/",
     category: "Business",
     tech: ["React", "Tailwind", "Vite"],
