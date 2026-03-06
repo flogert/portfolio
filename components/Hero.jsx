@@ -5,8 +5,6 @@ import Typewriter from 'typewriter-effect'
 import { motion } from 'framer-motion'
 
 const Hero = () => {
-  const [show, setShow] = useState(false);
-  const [effect, setEffect] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -38,28 +36,28 @@ const Hero = () => {
             <div className={`bg-white dark:bg-space-light border border-teal-500 dark:border-space-neon hover:bg-teal-500 dark:hover:bg-space-neon hover:text-white dark:hover:text-space-dark transition-all duration-300 transform hover:scale-110 flex items-center justify-center ${
               isScrolled ? 'p-1.5 w-10 h-10 rounded-r-lg rounded-l-none border-l-0 shadow-md' : 'p-2 w-12 h-12 rounded-full'
             }`}>
-              <Image src="/github.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="GitHub" className="filter dark:invert" priority />
+              <Image src="/github.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="GitHub" className="filter dark:invert" />
             </div>
           </Link>
           <Link href='https://www.linkedin.com/in/flogertbardhi/' target='_blank' title='LinkedIn Profile'>
             <div className={`bg-white dark:bg-space-light border border-teal-500 dark:border-space-neon hover:bg-teal-500 dark:hover:bg-space-neon hover:text-white dark:hover:text-space-dark transition-all duration-300 transform hover:scale-110 flex items-center justify-center ${
               isScrolled ? 'p-1.5 w-10 h-10 rounded-r-lg rounded-l-none border-l-0 shadow-md' : 'p-2 w-12 h-12 rounded-full'
             }`}>
-              <Image src="/linkedin.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="LinkedIn" className="filter dark:invert" priority />
+              <Image src="/linkedin.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="LinkedIn" className="filter dark:invert" />
             </div>
           </Link>
           <Link href='https://twitter.com/HappyTreeArts' target='_blank' title='Twitter'>
             <div className={`bg-white dark:bg-space-light border border-teal-500 dark:border-space-neon hover:bg-teal-500 dark:hover:bg-space-neon hover:text-white dark:hover:text-space-dark transition-all duration-300 transform hover:scale-110 flex items-center justify-center ${
               isScrolled ? 'p-1.5 w-10 h-10 rounded-r-lg rounded-l-none border-l-0 shadow-md' : 'p-2 w-12 h-12 rounded-full'
             }`}>
-              <Image src="/twitter.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="Twitter" className="filter dark:invert" priority />
+              <Image src="/twitter.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="Twitter" className="filter dark:invert" />
             </div>
           </Link>
           <Link href='https://www.instagram.com/happytreearts/' target='_blank' title='Instagram'>
             <div className={`bg-white dark:bg-space-light border border-teal-500 dark:border-space-neon hover:bg-teal-500 dark:hover:bg-space-neon hover:text-white dark:hover:text-space-dark transition-all duration-300 transform hover:scale-110 flex items-center justify-center ${
               isScrolled ? 'p-1.5 w-10 h-10 rounded-r-lg rounded-l-none border-l-0 shadow-md' : 'p-2 w-12 h-12 rounded-full'
             }`}>
-              <Image src="/instagram.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="Instagram" className="filter dark:invert" priority />
+              <Image src="/instagram.svg" width={isScrolled ? 20 : 24} height={isScrolled ? 20 : 24} alt="Instagram" className="filter dark:invert" />
             </div>
           </Link>
         </motion.div>
@@ -98,32 +96,15 @@ const Hero = () => {
         >
           <div className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-teal-600 dark:border-space-neon neon-border animate-pulse-slow shadow-xl">
             <Image 
-              className={`object-cover transition-all duration-500 ${effect ? 'scale-110' : 'scale-100'}`}
-              onClick={() => { setEffect(true); setShow(!show)} }
-              onAnimationEnd={() => setEffect(false)} 
+              className='object-cover'
               src="/profile.jpg" 
               fill
               alt="Flogert Bardhi" 
               priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 256px, 320px"
+              quality={82}
             />
           </div>
-          
-          {/* Orbiting Tech Stack (Simplified visual representation) */}
-          {show && (
-            <div className='absolute top-0 left-0 w-full h-full pointer-events-none'>
-               {/* You can add orbiting animations here later if needed */}
-               <div className="absolute -top-10 -right-10 animate-bounce">
-                  <Image src="/react.svg" width={50} height={50} alt="React" className="bg-white rounded-full p-1 shadow-lg" />
-               </div>
-               <div className="absolute -bottom-5 -left-5 animate-bounce delay-100">
-                  <Image src="/nextjs.svg" width={50} height={50} alt="Next.js" className="bg-white rounded-full p-1 shadow-lg" />
-               </div>
-               <div className="absolute top-1/2 -right-16 animate-bounce delay-200">
-                  <Image src="/postgresql.svg" width={50} height={50} alt="PostgreSQL" className="bg-white rounded-full p-1 shadow-lg" />
-               </div>
-            </div>
-          )}
         </motion.div>
 
       </div>

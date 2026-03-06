@@ -29,6 +29,9 @@ const paintings = [
   { src: "/paintings/viego.jpg", title: "Viego", category: "Characters", tags: ["League of Legends", "Game", "Villain", "Ruined King"] },
   { src: "/paintings/warwick.jpg", title: "Warwick", category: "Characters", tags: ["League of Legends", "Game", "Monster", "Wolf"] },
   { src: "/paintings/windfall-haze.jpg", title: "Windfall Haze", category: "Landscape", tags: ["Abstract", "Blue", "Wind", "Art"] },
+  { src: "/paintings/Moose.jpg", title: "Moose", category: "Portraits", tags: ["Animal", "Wildlife", "Nature", "Majestic"] },
+  { src: "/paintings/Yosemite.jpg", title: "Yosemite", category: "Landscape", tags: ["Nature", "Mountains", "National Park", "Scenery"] },
+  { src: "/paintings/Kratos.jpg", title: "Kratos", category: "Characters", tags: ["God of War", "Game", "Fantasy", "Warrior"] },
 ];
 
 const categories = ["All", ...new Set(paintings.map(p => p.category))];
@@ -152,6 +155,7 @@ const Gallery = () => {
                 alt={painting.title}
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                quality={68}
               />
               <div className='absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100'>
                 <span className='text-white font-bold text-lg neon-text mb-1'>{painting.title}</span>
@@ -190,6 +194,7 @@ const Gallery = () => {
         render={{
           slide: ({ slide, rect }) => (
              <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={slide.src} 
                   alt={slide.title} 
@@ -197,7 +202,7 @@ const Gallery = () => {
                     maxWidth: "100%", 
                     maxHeight: "100%", 
                     objectFit: "contain",
-                    borderRadius: "12px", // Rounded corners for the image
+                    borderRadius: "12px",
                     boxShadow: "0 0 20px rgba(0,0,0,0.5)"
                   }} 
                 />

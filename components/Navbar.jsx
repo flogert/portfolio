@@ -84,6 +84,13 @@ const Navbar = () => {
                                 className='text-gray-600 dark:text-space-accent hover:text-teal-600 dark:hover:text-space-neon dark:hover:neon-text px-3 py-2 rounded-md text-sm font-medium transition-all duration-300'
                             >
                                 POEMS
+                            </Link>
+                            <Link 
+                                href='#contact'  
+                                scroll={false}
+                                className='text-gray-600 dark:text-space-accent hover:text-teal-600 dark:hover:text-space-neon dark:hover:neon-text px-3 py-2 rounded-md text-sm font-medium transition-all duration-300'
+                            >
+                                CONTACT
                             </Link>               
                         </div>
                     </div>
@@ -99,7 +106,7 @@ const Navbar = () => {
                             {!isOpen ? (
                                 <svg 
                                     className='block h-6 w-6' 
-                                    xmlns='http:www.w3.org/2000/svg' 
+                                    xmlns='http://www.w3.org/2000/svg' 
                                     fill='none' viewBox='0 0 24 24' 
                                     stroke='currentColor'
                                     aria-hidden='true'
@@ -108,7 +115,7 @@ const Navbar = () => {
                                 </svg> ) : (
                                 <svg 
                                     className='flex h-6 w-6' 
-                                    xmlns='http:www.w3.org/2000/svg' 
+                                    xmlns='http://www.w3.org/2000/svg' 
                                     fill='none' viewBox='0 0 24 24' 
                                     stroke='currentColor'
                                     aria-hidden='true'
@@ -158,6 +165,12 @@ const Navbar = () => {
                                 className="text-gray-600 dark:text-space-accent hover:bg-teal-50 dark:hover:bg-space-purple hover:text-teal-600 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                             >
                                 Poems
+                            </Link>
+                            <Link
+                                href="#contact"
+                                className="text-gray-600 dark:text-space-accent hover:bg-teal-50 dark:hover:bg-space-purple hover:text-teal-600 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                            >
+                                Contact
                             </Link>
                         </div>
 					</div>

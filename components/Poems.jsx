@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { poems } from '../data/poems'
@@ -9,6 +9,7 @@ const Poems = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const poemScrollRef = useRef(null);
 
   const filteredPoems = useMemo(() => {
     return poems.filter(poem => {
@@ -22,9 +23,15 @@ const Poems = () => {
   }, [selectedCategory, searchQuery]);
 
   // Reset index when filter changes to avoid out of bounds
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentIndex(0);
   }, [selectedCategory, searchQuery]);
+
+  useEffect(() => {
+    if (poemScrollRef.current) {
+      poemScrollRef.current.scrollTop = 0;
+    }
+  }, [currentIndex, selectedCategory, searchQuery]);
 
   const currentPoem = filteredPoems[currentIndex];
 
@@ -39,7 +46,7 @@ const Poems = () => {
   };
 
   return (
-    <div id="poems" className='min-h-screen py-20 px-4 flex flex-col items-center justify-center relative overflow-hidden'>
+    <div id="poems" className='min-h-screen py-20 px-4 flex flex-col items-center justify-center relative overflow-x-hidden'>
       {/* Background Elements for Coziness */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-white dark:from-space-dark dark:to-space-light opacity-50 pointer-events-none"></div>
       
@@ -54,7 +61,8 @@ const Poems = () => {
       </motion.h2>
 
       {/* Search and Filter Controls */}
-      <div className="w-full max-w-4xl mb-12 flex flex-col md:flex-row gap-6 items-center justify-between z-10">
+      <div className="w-full max-w-5xl mb-8 flex flex-col gap-4 z-10">
+        <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
         {/* Categories */}
         <div className="flex flex-wrap justify-center gap-2">
           {categories.map(cat => (
@@ -85,13 +93,34 @@ const Poems = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
+        </div>
+
+        {filteredPoems.length > 0 && (
+          <div className="md:hidden w-full flex flex-col gap-2 rounded-2xl border border-gray-200 bg-white/75 p-4 shadow-lg backdrop-blur-sm dark:border-space-purple/30 dark:bg-space-light/75">
+            <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-space-accent/80">
+              <span>Archive</span>
+              <span>{currentIndex + 1} / {filteredPoems.length}</span>
+            </div>
+            <select
+              value={currentIndex}
+              onChange={(e) => setCurrentIndex(Number(e.target.value))}
+              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:border-space-purple/30 dark:bg-space-dark dark:text-white dark:focus:border-space-neon dark:focus:ring-space-neon/20"
+            >
+              {filteredPoems.map((poem, idx) => (
+                <option key={poem.title} value={idx}>
+                  {poem.title} ({poem.date})
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {filteredPoems.length > 0 ? (
-        <div className="relative w-full max-w-4xl z-10 flex flex-col md:flex-row gap-8 items-center justify-center">
+        <div className="relative z-10 grid w-full max-w-5xl items-stretch gap-6 md:grid-cols-[minmax(0,1.7fr)_minmax(250px,0.9fr)]">
           
           {/* Poem Card */}
-          <div className="w-full md:w-2/3 bg-white/90 dark:bg-space-light/90 backdrop-blur-sm rounded-lg shadow-2xl p-8 md:p-12 border border-gray-200 dark:border-space-purple/30 min-h-[400px] flex flex-col relative">
+          <div className="relative flex min-h-[28rem] max-h-[78vh] flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white/90 p-6 shadow-2xl backdrop-blur-sm dark:border-space-purple/30 dark:bg-space-light/90 md:p-8">
               {/* Paper texture effect overlay */}
               <div className="absolute inset-0 rounded-lg opacity-5 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]"></div>
 
@@ -102,12 +131,12 @@ const Poems = () => {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
-                      className="flex-1 flex flex-col"
+                      className="flex h-full flex-1 flex-col"
                   >
-                      <div className="flex justify-between items-baseline mb-6 border-b border-gray-300 dark:border-space-purple/30 pb-4">
-                        <div>
+                      <div className="mb-5 flex flex-col gap-4 border-b border-gray-300 pb-4 dark:border-space-purple/30 md:flex-row md:items-start md:justify-between">
+                        <div className="min-w-0">
                           <h3 className="text-2xl md:text-3xl font-serif font-bold text-teal-800 dark:text-space-neon">{currentPoem.title}</h3>
-                          <div className="flex gap-2 mt-2">
+                          <div className="mt-2 flex flex-wrap gap-2">
                             {currentPoem.tags.map(tag => (
                               <span key={tag} className="text-xs font-mono text-teal-600 dark:text-space-accent bg-teal-50 dark:bg-space-dark/50 px-2 py-1 rounded-full border border-teal-100 dark:border-space-purple/30">
                                 #{tag}
@@ -115,11 +144,21 @@ const Poems = () => {
                             ))}
                           </div>
                         </div>
-                        <span className="text-sm font-mono text-gray-500 dark:text-space-accent opacity-70 whitespace-nowrap ml-4">{currentPoem.date}</span>
-                      </div>                      <div className="flex-1 flex flex-col items-center justify-center">
-                          <p className="text-lg md:text-xl font-serif leading-relaxed whitespace-pre-line text-gray-800 dark:text-gray-200 italic text-center mb-6">
+                        <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
+                          <span className="text-sm font-mono text-gray-500 dark:text-space-accent opacity-70 whitespace-nowrap">{currentPoem.date}</span>
+                          <span className="text-xs font-mono uppercase tracking-[0.18em] text-gray-400 dark:text-space-accent/70">
+                            Entry {currentIndex + 1} of {filteredPoems.length}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div ref={poemScrollRef} className="custom-scrollbar flex-1 overflow-y-auto pr-1">
+                          <p className="mb-6 text-center font-serif text-lg italic leading-relaxed text-gray-800 whitespace-pre-line dark:text-gray-200 md:text-[1.15rem]">
                               {currentPoem.content}
                           </p>
+                      </div>
+
+                      <div className="mt-5 flex items-center justify-center border-t border-gray-300 pt-4 dark:border-space-purple/30">
                           <Link 
                               href={currentPoem.link} 
                               target="_blank"
@@ -135,7 +174,7 @@ const Poems = () => {
               </AnimatePresence>
 
               {/* Navigation Controls */}
-              <div className="flex justify-between items-center mt-8 pt-4 border-t border-gray-300 dark:border-space-purple/30">
+                        <div className="mt-5 flex items-center justify-between border-t border-gray-300 pt-4 dark:border-space-purple/30">
                   <button 
                       onClick={prevPoem}
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-space-dark transition-colors text-teal-600 dark:text-space-neon"
@@ -146,7 +185,7 @@ const Poems = () => {
                       </svg>
                   </button>
                   
-                  <div className="flex gap-2">
+                    <div className="mx-4 flex max-w-[55%] flex-wrap items-center justify-center gap-2 md:max-w-[60%]">
                       {filteredPoems.map((_, idx) => (
                           <button
                               key={idx}
@@ -174,16 +213,16 @@ const Poems = () => {
           </div>
 
           {/* Side List (Desktop) */}
-          <div className="hidden md:flex flex-col w-1/3 gap-4">
+            <div className="hidden min-h-0 md:flex md:flex-col md:gap-4">
               <h3 className="text-xl font-bold text-gray-700 dark:text-space-accent mb-2 pl-2 border-l-4 border-teal-500 dark:border-space-neon">Archive</h3>
-              <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="custom-scrollbar flex max-h-[78vh] flex-col gap-3 overflow-y-auto pr-2">
                   {filteredPoems.map((poem, idx) => (
                       <button
                           key={idx}
                           onClick={() => setCurrentIndex(idx)}
                           className={`text-left p-4 rounded-lg transition-all duration-300 border ${
                               idx === currentIndex
-                                  ? 'bg-teal-50 dark:bg-space-light border-teal-500 dark:border-space-neon shadow-md transform scale-105'
+                        ? 'bg-teal-50 dark:bg-space-light border-teal-500 dark:border-space-neon shadow-md ring-1 ring-teal-500/30 dark:ring-space-neon/30'
                                   : 'bg-white/50 dark:bg-space-dark/50 border-transparent hover:bg-white dark:hover:bg-space-light hover:border-gray-300 dark:hover:border-space-purple/50'
                           }`}
                       >

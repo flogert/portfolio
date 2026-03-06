@@ -6,6 +6,7 @@ import Hero from '../components/Hero'
 import Projects from '../components/Projects'
 import Gallery from '../components/Gallery'
 import Poems from '../components/Poems'
+import Contact from '../components/Contact'
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <Projects />
         <Gallery />
         <Poems />
+        <Contact />
         <Footer />
       </main>
     </div>

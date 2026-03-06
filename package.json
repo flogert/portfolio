@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "cross-env NODE_OPTIONS=\"--require ./fix-readlink.js\" next dev",
+    "build": "cross-env NODE_OPTIONS=\"--require ./fix-readlink.js\" next build",
+    "start": "cross-env NODE_OPTIONS=\"--require ./fix-readlink.js\" next start",
+    "lint": "cross-env NODE_OPTIONS=\"--require ./fix-readlink.js\" next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
+    "caniuse-lite": "^1.0.30001777",
     "eslint": "8.27.0",
-    "eslint-config-next": "13.0.4",
+    "eslint-config-next": "^13.5.11",
     "framer-motion": "^12.23.24",
-    "next": "13.0.4",
+    "next": "^13.5.11",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -22,7 +23,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "cross-env": "^10.1.0",
     "postcss": "^8.4.19",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.2.4",
     "tailwindcss-animate": "^1.0.5"
   }
