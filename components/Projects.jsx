@@ -59,13 +59,13 @@ const projectsData = [
     tags: ["Wellness", "Timer", "Minimal", "Focus"]
   },
   {
-    title: "Tribe Salon",
-    description: "Website for a local salon.",
-    image: "/projects/tribe-salon.PNG",
-    link: "https://flogert.github.io/tribe-salon/",
-    category: "Business",
-    tech: ["HTML", "CSS"],
-    tags: ["Salon", "Branding", "Local Business", "Marketing Site"]
+    title: "Illustrator Portfolio",
+    description: "A portfolio showcasing game art, character designs, and environments.",
+    image: "/projects/game-art.PNG",
+    link: "https://flogert.github.io/illustrator-portfolio/",
+    category: "Art",
+    tech: ["React", "Tailwind", "Vite"],
+    tags: ["Game Art", "Illustration", "Character Design", "Environment"]
   },
   {
     title: "Advice Generator",
