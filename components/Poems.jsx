@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { poems } from '../data/poems'
 
 const categories = ["All", ...new Set(poems.map(p => p.category))];
+const swipeThreshold = 75;
 
 const Poems = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,6 +44,18 @@ const Poems = () => {
   const prevPoem = () => {
     if (filteredPoems.length === 0) return;
     setCurrentIndex((prev) => (prev - 1 + filteredPoems.length) % filteredPoems.length);
+  };
+
+  const handleSwipeNavigation = (_, info) => {
+    if (filteredPoems.length <= 1) return;
+
+    if (info.offset.x <= -swipeThreshold) {
+      nextPoem();
+    }
+
+    if (info.offset.x >= swipeThreshold) {
+      prevPoem();
+    }
   };
 
   return (
@@ -112,6 +125,31 @@ const Poems = () => {
                 </option>
               ))}
             </select>
+            <div className="flex items-center justify-between gap-3 pt-1">
+              <button
+                onClick={prevPoem}
+                className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-teal-400 hover:text-teal-600 dark:border-space-purple/30 dark:bg-space-dark dark:text-white dark:hover:border-space-neon dark:hover:text-space-neon"
+                aria-label="Previous poem"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                Previous
+              </button>
+              <span className="text-[11px] uppercase tracking-[0.18em] text-gray-400 dark:text-space-accent/70">
+                Swipe card
+              </span>
+              <button
+                onClick={nextPoem}
+                className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-teal-400 hover:text-teal-600 dark:border-space-purple/30 dark:bg-space-dark dark:text-white dark:hover:border-space-neon dark:hover:text-space-neon"
+                aria-label="Next poem"
+              >
+                Next
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -131,7 +169,11 @@ const Poems = () => {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
-                      className="flex h-full flex-1 flex-col"
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.18}
+                      onDragEnd={handleSwipeNavigation}
+                      className="flex h-full flex-1 flex-col touch-pan-y"
                   >
                       <div className="mb-5 flex flex-col gap-4 border-b border-gray-300 pb-4 dark:border-space-purple/30 md:flex-row md:items-start md:justify-between">
                         <div className="min-w-0">
@@ -157,6 +199,14 @@ const Poems = () => {
                               {currentPoem.content}
                           </p>
                       </div>
+
+                      {filteredPoems.length > 1 && (
+                        <div className="mt-2 flex justify-center md:hidden">
+                          <span className="rounded-full bg-gray-100 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-gray-400 dark:bg-space-dark/70 dark:text-space-accent/70">
+                            Swipe left or right to change entry
+                          </span>
+                        </div>
+                      )}
 
                       <div className="mt-5 flex items-center justify-center border-t border-gray-300 pt-4 dark:border-space-purple/30">
                           <Link 
