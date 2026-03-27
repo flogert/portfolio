@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@headlessui/react": "^1.7.4",
 		"@vercel/analytics": "^2.0.1",
+		"@vercel/speed-insights": "^2.0.0",
 		"caniuse-lite": "^1.0.30001777",
 		"framer-motion": "^12.23.24",
 		"next": "13.5.11",
